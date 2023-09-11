@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:simple_dxf/simple_dxf.dart';
@@ -7,7 +8,7 @@ import 'package:simple_dxf/simple_dxf.dart';
 // final layer3 = Layer(name: 'Layer 3', color: 143);
 
 void main() {
-  // final headerSection = HeaderSection(insUnits: InsUnits.millimeters);
+  final headerSection = HeaderSection.defaultHeaderR12;
 
   // final tablesSection = TablesSection(
   //   lineTypeTable: LineTypeTable(tableEntries: [
@@ -86,17 +87,19 @@ void main() {
   ]));
 
   final dxf = Dxf(
-    // headerSection: headerSection,
-    // tablesSection: tablesSection,
-    entitiesSection: EntitiesSection(entities: [
-      ...sheet.generate(Point(x: 0, y: 0, z: 0)),
-      ...sheet2.generate(Point(x: 1000, y: 1000, z: 0))
-    ]),
-  );
+      headerSection: headerSection,
+      classesSection: ClassesSection(),
+      tablesSection: TablesSection(),
+      blocksSection: BlocksSection(),
+      entitiesSection: EntitiesSection(entities: [
+        ...sheet.generate(Point(0, 0, 0)),
+        ...sheet2.generate(Point(1000, 1000, 0)),
+      ]),
+      objectsSection: ObjectsSection());
 
   // Write to file
   final file = File('${DateTime.now()} generated.dxf');
-  file.writeAsString(dxf.toString());
+  file.writeAsString(dxf.toString(), encoding: ascii);
   print('Saved to ${file.path}');
 }
 
@@ -104,8 +107,9 @@ class CustomView1 extends ViewGenerator {
   @override
   List<Entity> generateView(Point origin, double width, double height) {
     final line = Line(
-      p1: Point(x: 0, y: 0, z: 0),
-      p2: Point(x: 1000, y: 1000, z: 0),
+      p1: Point(0, 0, 0),
+      p2: Point(1000, 1000, 0),
+      scale: 1,
     );
 
     final polyline = Polyline(vertices: [

@@ -1,9 +1,11 @@
 part of 'entity.dart';
 
 class Polyline extends Entity {
-  Polyline({required this.vertices, this.flag}) : super(name: 'POLYLINE');
+  Polyline({required this.vertices, this.flag, this.elevation = 0})
+      : super(name: 'POLYLINE');
 
   List<Vertex> vertices;
+  double elevation;
 
   /// Polyline flags:
   /// - 0 = default
@@ -14,24 +16,25 @@ class Polyline extends Entity {
   /// - 16 = This is a 3D polygon mesh
   /// - 32 = The polygon mesh is closed in the N direction
   /// - 64 = The polyline is a polyface mesh
-  /// - 128 = The linetype pattern is generated continuously around the vertices of this polyline
+  /// - 128 = The linetype pattern is generated continuously around the vertices
+  /// of this polyline
   final int? flag;
 
-  /// [Autodesk DXF Reference > Entities Section > POLYLINE](https://help.autodesk.com/view/OARX/2018/ENU/?guid=GUID-ABF6B778-BE20-4B49-9B58-A94E64CEFFF3)
+  /// [Autodesk DXF Reference > Entities Section > POLYLINE](https://help.autodesk.com/view/OARX/2024/ENU/?guid=GUID-ABF6B778-BE20-4B49-9B58-A94E64CEFFF3)
   /// > APP: a “dummy” point; the X and Y values are always 0, and the Z value
   /// is the polyline's elevation (in OCS when 2D, WCS when 3D)
   ///
-  /// Currently elevation is not available, hence z = 0;
-  final Point _dummyPoint = Point(x: 0, y: 0, z: 0);
+  /// Currently elevation = 0;
+  Point get _dummyPoint => Point(0, 0, elevation);
 
-  /// [Autodesk DXF Reference > Entities Section > POLYLINE](https://help.autodesk.com/view/OARX/2018/ENU/?guid=GUID-ABF6B778-BE20-4B49-9B58-A94E64CEFFF3)
+  /// [Autodesk DXF Reference > Entities Section > POLYLINE](https://help.autodesk.com/view/OARX/2024/ENU/?guid=GUID-ABF6B778-BE20-4B49-9B58-A94E64CEFFF3)
   /// > Obsolete; formerly an “entities follow flag” (optional; ignore if present)
   final _followFlag = GroupCode.followFlag(1);
 
   final _seqEnd = SeqEnd();
 
   @override
-  set layer(Layer value) {
+  set layer(LAYER value) {
     super.layer = value;
     for (final vertex in vertices) {
       vertex.layer = value;
@@ -45,7 +48,7 @@ class Polyline extends Entity {
         '\n${GroupCode.layerName(layer)}'
         '\n$_followFlag'
         '\n$_dummyPoint'
-        '\n${GroupCode.flag(flag)}'
+        '\n${GroupCode.integer(70, flag ?? 0)}'
         '\n${vertices.nlJoin()}'
         '\n$_seqEnd';
   }
@@ -94,4 +97,18 @@ class Rectangle extends Polyline {
   final double top;
   final double right;
   final double bottom;
+
+  double get width => right - left;
+  double get height => top - bottom;
+
+  Point get topLeft => Point(left, top, elevation);
+  Point get topCenter => Point(left + width / 2.0, top, elevation);
+  Point get topRight => Point(right, top, elevation);
+  Point get centerLeft => Point(left, bottom + height / 2.0, elevation);
+  Point get center =>
+      Point(left + width / 2.0, bottom + height / 2.0, elevation);
+  Point get centerRight => Point(right, bottom + height / 2.0, elevation);
+  Point get bottomLeft => Point(left, bottom, elevation);
+  Point get bottomCenter => Point(left + width / 2.0, bottom, elevation);
+  Point get bottomRight => Point(right, bottom, elevation);
 }

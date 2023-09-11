@@ -10,3 +10,5 @@ export 'src/entities/entity.dart';
 export 'src/group_codes.dart';
 
 export 'src/views/views.dart';
+
+export 'src/utils/extensions.dart';

@@ -4,6 +4,13 @@ import '../headers/variables.dart';
 import '../tables/table.dart';
 import '../utils/extensions.dart';
 
+part 'header_section.dart';
+part 'classes_section.dart';
+part 'tables_section.dart';
+part 'blocks_section.dart';
+part 'entities_section.dart';
+part 'objects_section.dart';
+
 abstract class Section<T> {
   Section({required this.name});
 
@@ -34,7 +41,7 @@ abstract class Section<T> {
         .where((element) => element.isNotEmpty)
         .toList();
 
-    if (sanitisedList.isEmpty) return '';
+    // if (sanitisedList.isEmpty) return '';
 
     final entries = sanitisedList.nlJoin();
 
@@ -45,58 +52,29 @@ abstract class Section<T> {
   }
 
   static String parseAllSections({
-    // required HeaderSection headerSection,
-    // required TablesSection tablesSection,
+    required HeaderSection headerSection,
+    required ClassesSection classesSection,
+    required TablesSection tablesSection,
+    required BlocksSection blocksSection,
     required EntitiesSection entitySection,
+    required ObjectsSection objectsSection,
   }) {
-    // TODO String headerContent = headerSection._parseSection();
-    // TODO String tableContent = tablesSection._parseSection();
+    String headerContent = headerSection._parseSection();
+    String classesContent = classesSection._parseSection();
+    String tablesContent = tablesSection._parseSection();
+    String blocksContent = blocksSection._parseSection();
     String entityContent = entitySection._parseSection();
+    String objectsContent = objectsSection._parseSection();
 
     List<String> sections = [
-      // TODO if (headerContent.isNotEmpty) headerContent,
-      // TODO if (tableContent.isNotEmpty) tableContent,
+      if (headerContent.isNotEmpty) headerContent,
+      if (classesContent.isNotEmpty) classesContent,
+      if (tablesContent.isNotEmpty) tablesContent,
+      if (blocksContent.isNotEmpty) blocksContent,
       if (entityContent.isNotEmpty) entityContent,
+      if (objectsContent.isNotEmpty) objectsContent,
     ];
 
     return sections.nlJoin();
-  }
-}
-
-class HeaderSection extends Section<Variable> {
-  HeaderSection({InsUnits? insUnits}) : super(name: 'HEADER') {
-    _contents.addAll({InsUnits: insUnits});
-  }
-}
-
-class TablesSection extends Section<Table> {
-  TablesSection({
-    LineTypeTable? lineTypeTable,
-    LayerTable? layerTable,
-  }) : super(name: 'TABLES') {
-    _contents.addAll({
-      LineTypeTable: lineTypeTable,
-      LayerTable: layerTable,
-    });
-  }
-}
-
-class EntitiesSection extends Section<Entity> {
-  EntitiesSection({List<Entity>? entities}) : super(name: 'ENTITIES') {
-    if (entities.isNotNull) {
-      for (final entity in entities!) {
-        _contents.update(entity.hashCode, (value) => entity,
-            ifAbsent: () => entity);
-      }
-    }
-  }
-
-  @override
-  void add(Entity content) {
-    _contents.update(
-      content.hashCode,
-      (value) => content,
-      ifAbsent: () => content,
-    );
   }
 }

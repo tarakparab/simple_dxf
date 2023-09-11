@@ -11,8 +11,10 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages). 
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+
+Generate DXF content in ASCII format which can be written to a File.
+
+Eventually will replicate some of the implementations of [ezdxf](https://github.com/mozman/ezdxf).
 
 ## Features
 
@@ -37,3 +39,12 @@ const like = 'sample';
 TODO: Tell users more about the package: where to find more information, how to 
 contribute to the package, how to file issues, what response they can expect 
 from the package authors, and more.
+
+
+
+<!-- 
+Documentation is sourced from:
+- [Autodesk AutoCAD 2024 > DXF Reference](https://help.autodesk.com/view/OARX/2024/ENU/)
+- [ezdxf](https://ezdxf.readthedocs.io/) 
+- [progeSOFT](https://www.progesoft.com/products/progecad-professional/manual?mp=system-variables)
+-->

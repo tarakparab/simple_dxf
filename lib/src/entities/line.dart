@@ -1,19 +1,22 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'entity.dart';
 
 class Line extends Entity {
   Point p1;
   Point p2;
+  double scale; //TODO implement scale
 
   @override
-  set layer(Layer value) {
+  set layer(LAYER value) {
     super.layer = value;
     p1.layer = value;
     p2.layer = value;
   }
 
   Line({
-    required this.p1,
     required Point p2,
+    required this.p1,
+    required this.scale,
   })  : p2 = p2..pointIndex = 1,
         super(name: 'LINE');
 

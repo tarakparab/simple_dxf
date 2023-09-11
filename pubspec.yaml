@@ -1,12 +1,11 @@
 name: simple_dxf
-description: A starting point for Dart libraries or applications.
-version: 1.0.0
+description: Generate DXF content in ASCII format which can be written to a File.
+version: 0.1.0
 # repository: https://github.com/my_org/my_repo
 
 environment:
   sdk: ^3.1.0
 
-# Add regular dependencies here.
 dependencies:
   path_provider: ^2.1.0
   # path: ^1.8.0
