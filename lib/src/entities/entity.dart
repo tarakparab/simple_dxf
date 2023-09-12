@@ -15,5 +15,5 @@ abstract class Entity {
 
   String name;
 
-  LAYER layer = LAYER.zero;
+  LAYEREntry layer = LAYEREntry.zero;
 }

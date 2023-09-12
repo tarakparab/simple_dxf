@@ -14,14 +14,13 @@ abstract class TableEntry {
   final String name;
   const TableEntry({required this.name});
 
-  @override
-  String toString() => '${GroupCode.type(runtimeType.toString())}'
+  String get _entry => '${GroupCode.type(runtimeType.toString())}'
       '\n${GroupCode.name(name)}';
 }
 
 //    VPORT entry *ACTIVE is not required! Empty table is ok for AutoCAD.
-class VPORT extends TableEntry {
-  VPORT({
+class Vport extends TableEntry {
+  Vport({
     required super.name,
   });
 }
@@ -30,8 +29,8 @@ class VPORT extends TableEntry {
 //        BYBLOCK
 //        BYLAYER
 //        CONTINUOUS
-class LTYPE extends TableEntry {
-  const LTYPE({
+class LTYPEEntry extends TableEntry {
+  const LTYPEEntry({
     required super.name,
     required this.descriptiveText,
     required this.elementLengths,
@@ -54,7 +53,7 @@ class LTYPE extends TableEntry {
       .nlJoin();
 
   @override
-  String toString() => '${super}'
+  String toString() => '$_entry'
       '\n$_standardFlagValueCode'
       '\n${GroupCode.otherText(descriptiveText)}'
       '\n$_alignmentCode'
@@ -62,25 +61,25 @@ class LTYPE extends TableEntry {
       '\n${GroupCode.doublePrecisionFloat(40, _totalPatternLength)}'
       '${_nrOfLineTypeElements != 0 ? '\n$pattern' : ''}';
 
-  static const LTYPE byBlock = LTYPE(
+  static const LTYPEEntry byBlock = LTYPEEntry(
       name: 'BYBLOCK', descriptiveText: '', elementLengths: []); //TODO test
 
-  static const LTYPE byLayer = LTYPE(
+  static const LTYPEEntry byLayer = LTYPEEntry(
       name: 'BYLAYER', descriptiveText: '', elementLengths: []); //TODO test
 
-  static const LTYPE continuous = LTYPE(
+  static const LTYPEEntry continuous = LTYPEEntry(
       name: 'CONTINUOUS', descriptiveText: 'Solid line', elementLengths: []);
 }
 
 //    LAYER with at least an entry for layer ‘0’
-class LAYER extends TableEntry {
+class LAYEREntry extends TableEntry {
   final int color;
-  final LTYPE lineType;
+  final LTYPEEntry lineType;
 
-  const LAYER({
+  const LAYEREntry({
     required super.name,
     this.color = 7,
-    this.lineType = LTYPE.continuous,
+    this.lineType = LTYPEEntry.continuous,
     this.flag,
   });
 
@@ -92,17 +91,17 @@ class LAYER extends TableEntry {
   final int? flag;
 
   @override
-  String toString() => '${super}'
+  String toString() => '$_entry'
       '\n${GroupCode.integer(70, flag ?? 0)}'
       '\n${GroupCode.aciColorNr(color)}'
       '\n${GroupCode.lineTypeName(lineType)}';
 
-  static const zero = LAYER(name: '0');
+  static const zero = LAYEREntry(name: '0');
 }
 
 //    STYLE with at least an entry for style STANDARD
-class STYLE extends TableEntry {
-  const STYLE({
+class STYLEEntry extends TableEntry {
+  const STYLEEntry({
     required super.name,
     required this.textHeight,
     required this.widthFactor,
@@ -135,7 +134,7 @@ class STYLE extends TableEntry {
   final String? bigFontFileName;
 
   @override
-  String toString() => '${super}'
+  String toString() => '$_entry'
       '\n${GroupCode.integer(70, standardFlag ?? 0)}'
       '\n${GroupCode.doublePrecisionFloat(40, textHeight)}'
       '\n${GroupCode.doublePrecisionFloat(41, widthFactor)}'
@@ -145,7 +144,7 @@ class STYLE extends TableEntry {
       '\n${GroupCode.otherText(primaryFontFileName)}'
       '\n${GroupCode.otherText(code: 4, bigFontFileName ?? '')}';
 
-  static const standard = STYLE(
+  static const standard = STYLEEntry(
     name: 'STANDARD',
     textHeight: 0,
     widthFactor: 1,
@@ -156,20 +155,20 @@ class STYLE extends TableEntry {
 }
 
 //    VIEW can be empty
-class VIEW extends TableEntry {
-  const VIEW({required super.name});
+class VIEWEntry extends TableEntry {
+  const VIEWEntry({required super.name});
   // TODO
 }
 
 //    UCS can be empty
-class UCS extends TableEntry {
-  const UCS({required super.name});
+class UCSEntry extends TableEntry {
+  const UCSEntry({required super.name});
   // TODO
 }
 
 //    APPID with at least an entry for ACAD
-class APPID extends TableEntry {
-  const APPID({
+class APPIDEntry extends TableEntry {
+  const APPIDEntry({
     required super.name,
     this.standardFlag,
   });
@@ -178,15 +177,15 @@ class APPID extends TableEntry {
   final int? standardFlag;
 
   @override
-  String toString() => '${super}'
+  String toString() => '$_entry'
       '\n${GroupCode.integer(70, standardFlag ?? 0)}';
 
-  static const acad = APPID(name: 'ACAD');
+  static const acad = APPIDEntry(name: 'ACAD');
 }
 
 //    DIMSTYLE with at least an entry for style STANDARD
-class DIMSTYLE extends TableEntry {
-  const DIMSTYLE({
+class DIMSTYLEEntry extends TableEntry {
+  const DIMSTYLEEntry({
     required super.name,
     this.standardFlag,
     this.prefixOrSuffix,
@@ -225,54 +224,54 @@ class DIMSTYLE extends TableEntry {
   /// {@macro DIMDLI}
   final double dimensionLineIncrement;
 
-  @override
-  String toString() => '${super}'
-      '\n${GroupCode.integer(70, standardFlag ?? 0)}'
-      '\n${GroupCode.otherText(prefixOrSuffix ?? '')}'
-      '\n${GroupCode.otherText(prefixOrSuffixAltDim ?? '')}'
-      '\n${GroupCode.string(5, arrowHeadsBoth.id)}'
-      '\n${GroupCode.string(6, arrowHeadFirst.id)}'
-      '\n${GroupCode.string(7, arrowHeadSecond.id)}'
-      '\n${GroupCode.doublePrecisionFloat(40, scale)}'
-      '\n${GroupCode.doublePrecisionFloat(41, arrowSize)}'
-      '\n${GroupCode.doublePrecisionFloat(42, extensionLineOffset)}'
-      '\n${GroupCode.doublePrecisionFloat(
-        43,
-      )}'
-      '\n${GroupCode.doublePrecisionFloat(
-        44,
-      )}'
-      '\n${GroupCode.doublePrecisionFloat(
-        45,
-      )}'
-      '\n${GroupCode.doublePrecisionFloat(
-        46,
-      )}'
-      '\n${GroupCode.doublePrecisionFloat(
-        47,
-      )}'
-      '\n${GroupCode.doublePrecisionFloat(
-        48,
-      )}'
-      '\n${GroupCode.angle(50, obliqueAngle)}'
-      '\n${GroupCode.integer(70, textGenerationFlag ?? 0)}'
-      '\n${GroupCode.doublePrecisionFloat(42, lastHeightUsed)}'
-      '\n${GroupCode.otherText(code: 4, bigFontFileName ?? '')}';
+  // @override
+  // String toString() => '$_entry'
+  //     '\n${GroupCode.integer(70, standardFlag ?? 0)}'
+  //     '\n${GroupCode.otherText(prefixOrSuffix ?? '')}'
+  //     '\n${GroupCode.otherText(prefixOrSuffixAltDim ?? '')}'
+  //     '\n${GroupCode.string(5, arrowHeadsBoth.id)}'
+  //     '\n${GroupCode.string(6, arrowHeadFirst.id)}'
+  //     '\n${GroupCode.string(7, arrowHeadSecond.id)}'
+  //     '\n${GroupCode.doublePrecisionFloat(40, scale)}'
+  //     '\n${GroupCode.doublePrecisionFloat(41, arrowSize)}'
+  //     '\n${GroupCode.doublePrecisionFloat(42, extensionLineOffset)}'
+  //     '\n${GroupCode.doublePrecisionFloat(
+  //       43,
+  //     )}'
+  //     '\n${GroupCode.doublePrecisionFloat(
+  //       44,
+  //     )}'
+  //     '\n${GroupCode.doublePrecisionFloat(
+  //       45,
+  //     )}'
+  //     '\n${GroupCode.doublePrecisionFloat(
+  //       46,
+  //     )}'
+  //     '\n${GroupCode.doublePrecisionFloat(
+  //       47,
+  //     )}'
+  //     '\n${GroupCode.doublePrecisionFloat(
+  //       48,
+  //     )}'
+  //     '\n${GroupCode.angle(50, obliqueAngle)}'
+  //     '\n${GroupCode.integer(70, textGenerationFlag ?? 0)}'
+  //     '\n${GroupCode.doublePrecisionFloat(42, lastHeightUsed)}'
+  //     '\n${GroupCode.otherText(code: 4, bigFontFileName ?? '')}';
 
-  static const standard = STYLE(
-    name: 'STANDARD',
-    textHeight: 0,
-    widthFactor: 1,
-    obliqueAngle: 0,
-    lastHeightUsed: 0.2,
-    primaryFontFileName: 'txt',
-  );
+  // static const standard = DIMSTYLE(
+  //   name: 'STANDARD',
+  //   textHeight: 0,
+  //   widthFactor: 1,
+  //   obliqueAngle: 0,
+  //   lastHeightUsed: 0.2,
+  //   primaryFontFileName: 'txt',
+  // );
 }
 
 //    BLOCK_RECORD with two entries:
 //        *MODEL_SPACE
 //        *PAPER_SPACE
-class BLOCKRECORD extends TableEntry {
-  const BLOCKRECORD({required super.name});
+class BLOCKRECORDEntry extends TableEntry {
+  const BLOCKRECORDEntry({required super.name});
   // TODO
 }

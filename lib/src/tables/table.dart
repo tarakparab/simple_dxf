@@ -29,51 +29,51 @@ abstract class Table<T extends TableEntry> {
   }
 }
 
-class VPORTTable extends Table<VPORT> {
+class VPORTTable extends Table<Vport> {
   VPORTTable({required super.tableEntries}) : super(name: 'VPORT');
 }
 
-class LTYPETable extends Table<LTYPE> {
+class LTYPETable extends Table<LTYPEEntry> {
   LTYPETable({required super.tableEntries}) : super(name: 'LTYPE');
 }
 
-class LAYERTable extends Table<LAYER> {
+class LAYERTable extends Table<LAYEREntry> {
   LAYERTable({required super.tableEntries}) : super(name: 'LAYER') {
     // Default add
-    tableEntries.add(LAYER.zero);
+    tableEntries.add(LAYEREntry.zero);
   }
 }
 
-class STYLETable extends Table<STYLE> {
+class STYLETable extends Table<STYLEEntry> {
   STYLETable({required super.tableEntries}) : super(name: 'STYLE') {
     // Default add
-    tableEntries.add(STYLE.standard);
+    tableEntries.add(STYLEEntry.standard);
   }
 }
 
-class VIEWTable extends Table<VIEW> {
+class VIEWTable extends Table<VIEWEntry> {
   VIEWTable({required super.tableEntries}) : super(name: 'VIEW') {}
 }
 
-class UCSTable extends Table<UCS> {
+class UCSTable extends Table<UCSEntry> {
   UCSTable({required super.tableEntries}) : super(name: 'UCS') {}
 }
 
-class APPIDTable extends Table<APPID> {
+class APPIDTable extends Table<APPIDEntry> {
   APPIDTable({required super.tableEntries}) : super(name: 'APPID') {
     // Default add
-    tableEntries.add(APPID.acad);
+    tableEntries.add(APPIDEntry.acad);
   }
 }
 
-class DIMSTYLETable extends Table<DIMSTYLE> {
+class DIMSTYLETable extends Table<DIMSTYLEEntry> {
   DIMSTYLETable({required super.tableEntries}) : super(name: 'DIMSTYLE') {
     // Default add
-    tableEntries.add(DIMSTYLE.standard);
+    // tableEntries.add(DIMSTYLE.standard);
   }
 }
 
-class BLOCKRECORDTable extends Table<BLOCKRECORD> {
+class BLOCKRECORDTable extends Table<BLOCKRECORDEntry> {
   BLOCKRECORDTable({required super.tableEntries})
       : super(name: 'BLOCK_RECORD') {}
 }

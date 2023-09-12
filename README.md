@@ -14,7 +14,8 @@ and the Flutter guide for
 
 Generate DXF content in ASCII format which can be written to a File.
 
-Eventually will replicate some of the implementations of [ezdxf](https://github.com/mozman/ezdxf).
+Eventually will replicate some of the implementations of [ezdxf](https://github.com/mozman/ezdxf)
+and implementation syntax of flutter painting classes.
 
 ## Features
 

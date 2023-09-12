@@ -1,4 +1,4 @@
-part of 'views.dart';
+part of 'plotting.dart';
 
 // TODO Implement sheet properties
 
@@ -15,7 +15,7 @@ class Sheet extends View {
   final View view;
 
   @override
-  List<Entity> generate(Point origin) {
-    return view.generate(origin);
+  List<Entity> getEntities(Point origin) {
+    return view.getEntities(origin);
   }
 }

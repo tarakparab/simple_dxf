@@ -11,13 +11,9 @@ class Point extends Entity {
 
   int pointIndex = 0;
 
-  Point(
-    this.x,
-    this.y,
-    this.z,
-  ) : super(name: 'POINT');
+  Point(this.x, this.y, [this.z = 0]) : super(name: 'POINT');
 
-  Point translate(double dx, double dy, double dz) =>
+  Point translate(double dx, double dy, [double dz = 0]) =>
       Point(x + dx, y + dy, z + dz);
 
   @override

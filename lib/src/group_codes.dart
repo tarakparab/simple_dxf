@@ -50,11 +50,13 @@ class GroupCode {
 
   static GroupCode handle(String value) => string(5, value);
 
-  static GroupCode lineTypeName(LTYPE lineType) => string(6, lineType.name);
+  static GroupCode lineTypeName(LTYPEEntry lineType) =>
+      string(6, lineType.name);
 
-  static GroupCode textStyleName(STYLE textStyle) => string(7, textStyle.name);
+  static GroupCode textStyleName(STYLEEntry textStyle) =>
+      string(7, textStyle.name);
 
-  static GroupCode layerName(LAYER layer) => string(8, layer.name);
+  static GroupCode layerName(LAYEREntry layer) => string(8, layer.name);
 
   static GroupCode doublePrecision3DPointValue(int code, double value) {
     assert(code >= 10 && code <= 38);

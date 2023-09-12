@@ -7,7 +7,7 @@ class Line extends Entity {
   double scale; //TODO implement scale
 
   @override
-  set layer(LAYER value) {
+  set layer(LAYEREntry value) {
     super.layer = value;
     p1.layer = value;
     p2.layer = value;

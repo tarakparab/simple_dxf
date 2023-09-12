@@ -205,7 +205,7 @@ class CECOLOR extends Variable {
 
 /// Entity linetype name, or BYBLOCK or BYLAYER
 class CELTYPE extends Variable {
-  CELTYPE(LTYPE value)
+  CELTYPE(LTYPEEntry value)
       : super(
           'CELTYPE',
           [GroupCode.lineTypeName(value)],
@@ -232,7 +232,7 @@ class CHAMFERB extends Variable {
 
 /// Current layer name
 class CLAYER extends Variable {
-  CLAYER(LAYER value)
+  CLAYER(LAYEREntry value)
       : super(
           'CLAYER',
           [GroupCode.layerName(value)],
@@ -343,16 +343,16 @@ class DIMASO extends Variable {
 
 /// {@template DIMASZ}
 /// Dimensioning arrow size
-/// 
+///
 /// [DIMASZ (System Variable)](https://help.autodesk.com/view/ACD/2024/ENU/?guid=GUID-43E31690-BA17-4AD6-82D1-E7809BD1298A)
-/// 
-/// Controls the size of dimension line and leader line arrowheads. Also 
+///
+/// Controls the size of dimension line and leader line arrowheads. Also
 /// controls the size of hook lines.
 /// - Type:	Real
 /// - Saved in:	Drawing
 /// - Initial value:	0.1800 (imperial) or 2.5000 (metric)
 /// - Multiples of the arrowhead size determine whether dimension lines and text
-/// should fit between the extension lines. DIMASZ is also used to scale 
+/// should fit between the extension lines. DIMASZ is also used to scale
 /// arrowhead blocks if set by DIMBLK. DIMASZ has no effect when DIMTSZ is other
 /// than zero.
 /// {@endtemplate}
@@ -496,16 +496,16 @@ class DIMDLE extends Variable {
 
 /// {@template DIMDLI}
 /// Dimension line increment
-/// 
+///
 /// [DIMDLI (System Variable)](https://help.autodesk.com/view/ACD/2024/ENU/?guid=GUID-D2D1AF3D-004B-4C47-BABE-22B7327EE128)
-/// 
+///
 /// Controls the spacing of the dimension lines in baseline dimensions.
 /// - Type:	Real
 /// - Saved in:	Drawing
 /// - Initial value:	0.3800 (imperial) or 3.7500 (metric)
-/// 
-/// Each dimension line is offset from the previous one by this amount, if 
-/// necessary, to avoid drawing over it. Changes made with DIMDLI are not 
+///
+/// Each dimension line is offset from the previous one by this amount, if
+/// necessary, to avoid drawing over it. Changes made with DIMDLI are not
 /// applied to existing dimensions.
 /// {@endtemplate}
 class DIMDLI extends Variable {
@@ -527,14 +527,14 @@ class DIMEXE extends Variable {
 
 /// {@template DIMEXO}
 /// Extension line offset
-/// 
+///
 /// [DIMEXO (System Variable)](https://help.autodesk.com/view/ACD/2024/ENU/?guid=GUID-5CF50ABD-1F77-4609-BEB5-A129BF7DD746)
-/// 
+///
 /// Specifies how far extension lines are offset from origin points.
 /// - Type:	Real
 /// - Saved in:	Drawing
 /// - Initial value:	0.0625 (imperial) or 0.6250 (metric)
-/// 
+///
 /// With fixed-length extension lines, this value determines the minimum offset.
 /// {@endtemplate}
 class DIMEXO extends Variable {
@@ -626,7 +626,7 @@ class DIMSAH extends Variable {
 /// - Type:	Real
 /// - Saved in:	Drawing
 /// - Initial value:	1.0
-/// 
+///
 /// Also affects the leader objects with the LEADER command.
 /// - Use MLEADERSCALE to scale multileader objects created with the MLEADER command.
 /// - 0.0 = A reasonable default value is computed based on the scaling between the current model space viewport and paper space. If you are in paper space or model space and not using the paper space feature, the scale factor is 1.0.
@@ -1554,7 +1554,7 @@ class TEXTSIZE extends Variable {
 
 /// Current text style name
 class TEXTSTYLE extends Variable {
-  TEXTSTYLE(STYLE value)
+  TEXTSTYLE(STYLEEntry value)
       : super(
           'TEXTSTYLE',
           [GroupCode.textStyleName(value)],

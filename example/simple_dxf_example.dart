@@ -8,7 +8,7 @@ import 'package:simple_dxf/simple_dxf.dart';
 // final layer3 = Layer(name: 'Layer 3', color: 143);
 
 void main() {
-  final headerSection = HeaderSection.defaultHeaderR12;
+
 
   // final tablesSection = TablesSection(
   //   lineTypeTable: LineTypeTable(tableEntries: [
@@ -26,12 +26,12 @@ void main() {
       views: [
         Row(
           views: [
-            ViewContainer(
+            CustomPlot(
               generator: CustomView1(),
               height: 2000,
               width: 2000,
             ),
-            ViewContainer(
+            CustomPlot(
               generator: CustomView2(),
               height: 2000,
               width: 2000,
@@ -45,22 +45,22 @@ void main() {
   Sheet sheet2 = Sheet(
       view: Column(views: [
     Row(views: [
-      ViewContainer(
+      CustomPlot(
         generator: CustomGridView(),
         width: 100,
         height: 100,
       ),
     ]),
     Row(views: [
-      Padding.all(
-        100,
-        view: ViewContainer(
+      Margin(
+        margin: EdgeOffsets.all(100),
+        view: CustomPlot(
           generator: CustomGridView(),
           width: 200,
           height: 200,
         ),
       ),
-      ViewContainer(
+      CustomPlot(
         generator: CustomGridView(),
         width: 300,
         height: 300,
@@ -68,17 +68,17 @@ void main() {
     ]),
     Row(views: [
       SizedBox(width: 200, height: 300),
-      ViewContainer(
+      CustomPlot(
         generator: CustomGridView(),
         width: 400,
         height: 400,
       ),
-      ViewContainer(
+      CustomPlot(
         generator: CustomGridView(),
         width: 500,
         height: 500,
       ),
-      ViewContainer(
+      CustomPlot(
         generator: CustomGridView(),
         width: 600,
         height: 600,
@@ -87,15 +87,16 @@ void main() {
   ]));
 
   final dxf = Dxf(
-      headerSection: headerSection,
-      classesSection: ClassesSection(),
-      tablesSection: TablesSection(),
-      blocksSection: BlocksSection(),
-      entitiesSection: EntitiesSection(entities: [
-        ...sheet.generate(Point(0, 0, 0)),
-        ...sheet2.generate(Point(1000, 1000, 0)),
-      ]),
-      objectsSection: ObjectsSection());
+    // headerSection:  HeaderSection.defaultHeaderR12,
+    // classesSection: ClassesSection(),
+    // tablesSection: TablesSection(),
+    // blocksSection: BlocksSection(),
+    entitiesSection: EntitiesSection(entities: [
+      ...sheet.getEntities(Point(0, 0, 0)),
+      ...sheet2.getEntities(Point(1000, 1000, 0)),
+    ]),
+    // objectsSection: ObjectsSection(),
+  );
 
   // Write to file
   final file = File('${DateTime.now()} generated.dxf');
@@ -103,9 +104,9 @@ void main() {
   print('Saved to ${file.path}');
 }
 
-class CustomView1 extends ViewGenerator {
+class CustomView1 extends CustomPlotter {
   @override
-  List<Entity> generateView(Point origin, double width, double height) {
+  List<Entity> plot(Point origin, double width, double height) {
     final line = Line(
       p1: Point(0, 0, 0),
       p2: Point(1000, 1000, 0),
@@ -127,18 +128,18 @@ class CustomView1 extends ViewGenerator {
   }
 }
 
-class CustomView2 extends ViewGenerator {
+class CustomView2 extends CustomPlotter {
   @override
-  List<Entity> generateView(Point origin, double width, double height) {
+  List<Entity> plot(Point origin, double width, double height) {
     final rect = Rectangle.fromLBWH(0, 0, 1000, 1000);
 
     return [rect];
   }
 }
 
-class CustomGridView extends ViewGenerator {
+class CustomGridView extends CustomPlotter {
   @override
-  List<Entity> generateView(Point origin, double width, double height) {
+  List<Entity> plot(Point origin, double width, double height) {
     Rectangle viewOutline =
         Rectangle.fromLBWH(origin.x, origin.y, width, height);
 

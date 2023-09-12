@@ -34,7 +34,7 @@ class Polyline extends Entity {
   final _seqEnd = SeqEnd();
 
   @override
-  set layer(LAYER value) {
+  set layer(LAYEREntry value) {
     super.layer = value;
     for (final vertex in vertices) {
       vertex.layer = value;
