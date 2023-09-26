@@ -1,14 +1,14 @@
 name: simple_dxf
 description: Generate DXF content in ASCII format which can be written to a File.
-version: 0.1.0
-# repository: https://github.com/my_org/my_repo
+
+publish_to: none
+
+version: 0.0.1
 
 environment:
   sdk: ^3.1.0
 
 dependencies:
-  path_provider: ^2.1.0
-  # path: ^1.8.0
 
 dev_dependencies:
   lints: ^2.0.0

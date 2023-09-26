@@ -16,10 +16,10 @@ class Vertex extends Entity {
   /// - 128 = Polyface mesh vertex
   final int? flag;
 
-  Vertex({
-    required this.x,
-    required this.y,
-    required this.z,
+  Vertex(
+    this.x,
+    this.y, {
+    this.z = 0,
     this.flag,
   }) : super(name: 'VERTEX');
 
@@ -29,4 +29,9 @@ class Vertex extends Entity {
       '\n${GroupCode.doublePrecision3DPointValue(10, x)}'
       '\n${GroupCode.doublePrecision3DPointValue(20, y)}'
       '\n${GroupCode.doublePrecision3DPointValue(30, z)}';
+
+  Vertex translate(double dx, double dy, [double dz = 0]) =>
+      Vertex(x + dx, y + dy, z: z + dz);
+
+  Point toPoint() => Point(x, y);
 }

@@ -13,7 +13,7 @@ class GroupCode {
   String toString() => '$code'
       '\n$value';
 
-  // VALUE TYPES
+  // * VALUE TYPES
   /// 2049 single-byte characters not including the newline at the end of the line
   static GroupCode string(int code, String value) {
     assert(code >= 0 && code <= 9);
@@ -29,14 +29,14 @@ class GroupCode {
     return GroupCode(' $code', '${spaces(5)}$value');
   }
 
+  // !
+  // ignore: unused_element
   static GroupCode _integer32bit(int code, int value) {
     assert(code >= 90 && code <= 99);
     return GroupCode(' $code', '${spaces(5)}$value');
   }
 
-  ////////////////////////////////////////////////////////////////////////////////////////
-
-  // SPECIFIC TYPES
+  // * SPECIFIC TYPES
   static GroupCode type(String name) => string(0, name);
 
   /// Primary text value for an entity

@@ -6,7 +6,7 @@ class Dxf {
     // required this.headerSection,
     // required this.classesSection,
     // required this.tablesSection,
-    // required this.blocksSection,
+    required this.blocksSection,
     required this.entitiesSection,
     // required this.objectsSection,
   });
@@ -14,7 +14,7 @@ class Dxf {
   // final HeaderSection headerSection;
   // final ClassesSection classesSection; //TODO
   // final TablesSection tablesSection; //TODO
-  // final BlocksSection blocksSection; //TODO
+  final BlocksSection blocksSection; //TODO
   final EntitiesSection entitiesSection;
   // final ObjectsSection objectsSection; //TODO
   // final ThumbnailImageSection thumbnailImageSection; //TODO
@@ -26,7 +26,7 @@ class Dxf {
       // headerSection: headerSection,
       // classesSection: classesSection,
       // tablesSection: tablesSection,
-      // blocksSection: blocksSection,
+      blocksSection: blocksSection,
       entitySection: entitiesSection,
       // objectsSection: objectsSection,
     );

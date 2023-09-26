@@ -1,11 +1,10 @@
 part of 'entity.dart';
 
 class Polyline extends Entity {
-  Polyline({required this.vertices, this.flag, this.elevation = 0})
-      : super(name: 'POLYLINE');
+  Polyline({required this.vertices, this.flag}) : super(name: 'POLYLINE');
 
   List<Vertex> vertices;
-  double elevation;
+  // double elevation;
 
   /// Polyline flags:
   /// - 0 = default
@@ -25,7 +24,7 @@ class Polyline extends Entity {
   /// is the polyline's elevation (in OCS when 2D, WCS when 3D)
   ///
   /// Currently elevation = 0;
-  Point get _dummyPoint => Point(0, 0, elevation);
+  Point get _dummyPoint => Point(0, 0);
 
   /// [Autodesk DXF Reference > Entities Section > POLYLINE](https://help.autodesk.com/view/OARX/2024/ENU/?guid=GUID-ABF6B778-BE20-4B49-9B58-A94E64CEFFF3)
   /// > Obsolete; formerly an “entities follow flag” (optional; ignore if present)
@@ -43,25 +42,23 @@ class Polyline extends Entity {
   }
 
   @override
-  String toString() {
-    return '${GroupCode.type(name)}'
+  String toString() => '${GroupCode.type(name)}'
         '\n${GroupCode.layerName(layer)}'
         '\n$_followFlag'
         '\n$_dummyPoint'
         '\n${GroupCode.integer(70, flag ?? 0)}'
         '\n${vertices.nlJoin()}'
         '\n$_seqEnd';
-  }
 }
 
 class Rectangle extends Polyline {
   Rectangle.fromLBRT(this.left, this.bottom, this.right, this.top)
       : super(
           vertices: [
-            Vertex(x: left, y: bottom, z: 0),
-            Vertex(x: left, y: top, z: 0),
-            Vertex(x: right, y: top, z: 0),
-            Vertex(x: right, y: bottom, z: 0),
+            Vertex(left, bottom),
+            Vertex(left, top),
+            Vertex(right, top),
+            Vertex(right, bottom),
           ],
           flag: 1,
         );
@@ -101,14 +98,13 @@ class Rectangle extends Polyline {
   double get width => right - left;
   double get height => top - bottom;
 
-  Point get topLeft => Point(left, top, elevation);
-  Point get topCenter => Point(left + width / 2.0, top, elevation);
-  Point get topRight => Point(right, top, elevation);
-  Point get centerLeft => Point(left, bottom + height / 2.0, elevation);
-  Point get center =>
-      Point(left + width / 2.0, bottom + height / 2.0, elevation);
-  Point get centerRight => Point(right, bottom + height / 2.0, elevation);
-  Point get bottomLeft => Point(left, bottom, elevation);
-  Point get bottomCenter => Point(left + width / 2.0, bottom, elevation);
-  Point get bottomRight => Point(right, bottom, elevation);
+  Vertex get topLeft => Vertex(left, top);
+  Vertex get topCenter => Vertex(left + width / 2.0, top);
+  Vertex get topRight => Vertex(right, top);
+  Vertex get centerLeft => Vertex(left, bottom + height / 2.0);
+  Vertex get center => Vertex(left + width / 2.0, bottom + height / 2.0);
+  Vertex get centerRight => Vertex(right, bottom + height / 2.0);
+  Vertex get bottomLeft => Vertex(left, bottom);
+  Vertex get bottomCenter => Vertex(left + width / 2.0, bottom);
+  Vertex get bottomRight => Vertex(right, bottom);
 }

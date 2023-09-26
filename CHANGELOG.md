@@ -1,3 +1,4 @@
-## 1.0.0
+## 0.0.1
 
-- Initial version.
+- Draw line, polyline, rectangle, circle, block of text.
+

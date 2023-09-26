@@ -22,6 +22,21 @@ class Point extends Entity {
       '\n${GroupCode.doublePrecision3DPointValue(20 + pointIndex, y)}'
       '\n${GroupCode.doublePrecision3DPointValue(30 + pointIndex, z)}';
 
+  Point operator +(Point other) => Point(x + other.x, y + other.y, z + other.z);
+  Point operator -(Point other) => Point(x - other.x, y - other.y, z - other.z);
+  Point operator *(double operand) =>
+      Point(x * operand, y * operand, z * operand);
+
+  /// [angle] in radians clockwise
+  Point rotate(Point pivot, double angle) {
+    final delta = this - pivot;
+    var cos = math.cos(angle);
+    var sin = math.sin(angle);
+    return pivot +
+        Point(delta.x * cos, delta.x * sin, delta.z) +
+        Point(-delta.y * sin, delta.y * cos, delta.z);
+  }
+
   static Point? lerp(Point? a, Point? b, double t) {
     if (b == null) {
       if (a == null) {

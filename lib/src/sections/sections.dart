@@ -1,3 +1,4 @@
+import '../blocks/block.dart';
 import '../entities/entity.dart';
 import '../group_codes.dart';
 import '../headers/variables.dart';
@@ -19,6 +20,10 @@ abstract class Section<T> {
   void add(T content) {
     _contents.update(
       content.runtimeType,
+      // ! TODO change to hashcode
+      // ! TODO change header section to runtimetype
+      // ! TODO make relevant changes in all sections in add, addAll and update methods
+
       (value) => content,
       ifAbsent: () => content,
     );
@@ -54,14 +59,14 @@ abstract class Section<T> {
     // required HeaderSection headerSection,
     // required ClassesSection classesSection,
     // required TablesSection tablesSection,
-    // required BlocksSection blocksSection,
+    required BlocksSection blocksSection,
     required EntitiesSection entitySection,
     // required ObjectsSection objectsSection,
   }) {
     // String headerContent = headerSection._parseSection();
     // String classesContent = classesSection._parseSection();
     // String tablesContent = tablesSection._parseSection();
-    // String blocksContent = blocksSection._parseSection();
+    String blocksContent = blocksSection._parseSection();
     String entityContent = entitySection._parseSection();
     // String objectsContent = objectsSection._parseSection();
 
@@ -69,7 +74,7 @@ abstract class Section<T> {
       // if (headerContent.isNotEmpty) headerContent,
       // if (classesContent.isNotEmpty) classesContent,
       // if (tablesContent.isNotEmpty) tablesContent,
-      // if (blocksContent.isNotEmpty) blocksContent,
+      if (blocksContent.isNotEmpty) blocksContent,
       if (entityContent.isNotEmpty) entityContent,
       // if (objectsContent.isNotEmpty) objectsContent,
     ];

@@ -16,17 +16,10 @@ abstract class Table<T extends TableEntry> {
   int get _nrOfEntries => tableEntries.length;
 
   @override
-  String toString() {
-    return
-        // TODO test
-        // tableEntries.isEmpty
-        // ? ''
-        // :
-        '${GroupCode.type('TABLE')}'
+  String toString() => '${GroupCode.type('TABLE')}'
             '\n${GroupCode.name(name)}'
             '\n${GroupCode.integer(70, _nrOfEntries)}'
             '\n${tableEntries.nlJoin()}';
-  }
 }
 
 class VPORTTable extends Table<Vport> {
